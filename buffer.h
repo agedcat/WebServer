@@ -29,25 +29,39 @@ public:
     //获取当前读指针
     const char* curReadPtr() const;
     //获取当前写指针
-    const char* curWritePtr() const;
+    const char* curWritePtrConst() const;
+    char* curWritePtr();
     //更新读指针
-    void updateReadPtr();
+    void updateReadPtr(size_t len);
+    void updateReadPtrUntilEnd(const char* end);//将读指针直接更新到指定位置
     //更新写指针
-    void updateWritePtr();
+    void updateWritePtr(size_t len);
     //将读指针和写指针初始化
     void initPtr();
 
     //保证将数据写入缓冲区
     void ensureWriteable(size_t len);
     //将数据写入到缓冲区
-    void Append();
+    void append(const char* str,size_t len);
+    void append(const std::string& str);
+    void append(const void* data,size_t len);
+    void append(const Buffer& buffer);
 
     //IO操作的读与写接口
-    ssize_t ReadFd(int fd,int* Errno);
-    ssize_t WriteFd(int fd,int* Errno);
+    ssize_t readFd(int fd,int* Errno);
+    ssize_t writeFd(int fd,int* Errno);
 
     //将缓冲区的数据转化为字符串
     std::string AlltoStr();
+
+    //test
+    void printContent()
+    {
+        for(auto e:buffer_)
+        {
+            std::cout<<e<<std::endl;
+        }
+    }
 
 private:
     //返回指向缓冲区初始位置的指针

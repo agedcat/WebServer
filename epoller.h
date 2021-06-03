@@ -34,8 +34,7 @@ public:
 
 private:
     int epollerFd_;//这是标志epoll的描述符
-    std::vector<struct epoll_event>events_; //
-    
+    std::vector<struct epoll_event>events_; //就绪的事件
 };
 
 #endif //EPOLLER_H
