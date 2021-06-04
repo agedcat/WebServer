@@ -124,10 +124,10 @@ ssize_t Buffer::readFd(int fd,int* Errno)
     iov[1].iov_base=buff;
     iov[1].iov_len=sizeof(buff);
 
-    const ssize_t len=read(fd,iov,2);
+    const ssize_t len=readv(fd,iov,2);
     if(len<0)
     {
-        std::cout<<"从fd读取数据失败！"<<std::endl;
+        //std::cout<<"从fd读取数据失败！"<<std::endl;
         *Errno=errno;
     }
     else if(static_cast<size_t>(len)<=writable)
@@ -147,7 +147,7 @@ ssize_t Buffer::writeFd(int fd,int* Errno)
     ssize_t len=write(fd,curReadPtr(),readSize);
     if(len<0)
     {
-        std::cout<<"往fd写入数据失败！"<<std::endl;
+        //std::cout<<"往fd写入数据失败！"<<std::endl;
         *Errno=errno;
         return len;
     }

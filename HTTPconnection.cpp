@@ -58,6 +58,7 @@ ssize_t HTTPconnection::readBuffer(int* saveErrno) {
     ssize_t len = -1;
     do {
         len = readBuffer_.readFd(fd_, saveErrno);
+        //std::cout<<fd_<<" read bytes:"<<len<<std::endl;
         if (len <= 0) {
             break;
         }
@@ -94,7 +95,7 @@ ssize_t HTTPconnection::writeBuffer(int* saveErrno) {
 bool HTTPconnection::handleHTTPConn() {
     request_.init();
     if(readBuffer_.readableBytes() <= 0) {
-        std::cout<<"readBuffer is empty!"<<std::endl;
+        //std::cout<<"readBuffer is empty!"<<std::endl;
         return false;
     }
     else if(request_.parse(readBuffer_)) {

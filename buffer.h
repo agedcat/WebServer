@@ -57,10 +57,12 @@ public:
     //test
     void printContent()
     {
-        for(auto e:buffer_)
+        std::cout<<"pointer location info:"<<readPos_<<" "<<writePos_<<std::endl;
+        for(int i=readPos_;i<=writePos_;++i)
         {
-            std::cout<<e<<std::endl;
+            std::cout<<buffer_[i]<<" ";
         }
+        std::cout<<std::endl;
     }
 
 private:

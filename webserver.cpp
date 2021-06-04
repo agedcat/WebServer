@@ -80,6 +80,7 @@ void WebServer::Start()
             if(fd==listenFd_)
             {
                 handleListen_();
+                //std::cout<<fd<<" is listening!"<<std::endl;
             }
             else if(events & (EPOLLRDHUP | EPOLLHUP | EPOLLERR)) {
                 assert(users_.count(fd) > 0);
@@ -88,6 +89,7 @@ void WebServer::Start()
             else if(events & EPOLLIN) {
                 assert(users_.count(fd) > 0);
                 handleRead_(&users_[fd]);
+                //std::cout<<fd<<" reading end!"<<std::endl;
             }
             else if(events & EPOLLOUT) {
                 assert(users_.count(fd) > 0);
@@ -106,7 +108,7 @@ void WebServer::sendError_(int fd, const char* info)
     int ret=send(fd,info,strlen(info),0);
     if(ret<0)
     {
-        std::cout<<"send error to client"<<fd<<" error!"<<std::endl;
+        //std::cout<<"send error to client"<<fd<<" error!"<<std::endl;
     }
     close(fd);
 }
@@ -114,7 +116,7 @@ void WebServer::sendError_(int fd, const char* info)
 void WebServer::closeConn_(HTTPconnection* client)
 {
     assert(client);
-    std::cout<<"client"<<client->getFd()<<" quit!"<<std::endl;
+    //std::cout<<"client"<<client->getFd()<<" quit!"<<std::endl;
     epoller_->delFd(client->getFd());
     client->closeHTTPConn();
 }
@@ -139,7 +141,7 @@ void WebServer::handleListen_() {
         if(fd <= 0) { return;}
         else if(HTTPconnection::userCount >= MAX_FD) {
             sendError_(fd, "Server busy!");
-            std::cout<<"Clients is full!"<<std::endl;
+            //std::cout<<"Clients is full!"<<std::endl;
             return;
         }
         addClientConnection(fd, addr);
@@ -174,9 +176,9 @@ void WebServer::onRead_(HTTPconnection* client)
     int ret = -1;
     int readErrno = 0;
     ret = client->readBuffer(&readErrno);
-    std::cout<<ret<<std::endl;
+    //std::cout<<ret<<std::endl;
     if(ret <= 0 && readErrno != EAGAIN) {
-        std::cout<<"do not read data!"<<std::endl;
+        //std::cout<<"do not read data!"<<std::endl;
         closeConn_(client);
         return;
     }
@@ -218,7 +220,7 @@ bool WebServer::initSocket_() {
     int ret;
     struct sockaddr_in addr;
     if(port_ > 65535 || port_ < 1024) {
-       std::cout<<"Port number error!"<<std::endl;
+        //std::cout<<"Port number error!"<<std::endl;
         return false;
     }
     addr.sin_family = AF_INET;
@@ -233,14 +235,14 @@ bool WebServer::initSocket_() {
 
     listenFd_ = socket(AF_INET, SOCK_STREAM, 0);
     if(listenFd_ < 0) {
-        std::cout<<"Create socket error!"<<std::endl;
+        //std::cout<<"Create socket error!"<<std::endl;
         return false;
     }
 
     ret = setsockopt(listenFd_, SOL_SOCKET, SO_LINGER, &optLinger, sizeof(optLinger));
     if(ret < 0) {
         close(listenFd_);
-        std::cout<<"Init linger error!"<<std::endl;
+        //std::cout<<"Init linger error!"<<std::endl;
         return false;
     }
 
@@ -249,32 +251,32 @@ bool WebServer::initSocket_() {
     /* 只有最后一个套接字会正常接收数据。 */
     ret = setsockopt(listenFd_, SOL_SOCKET, SO_REUSEADDR, (const void*)&optval, sizeof(int));
     if(ret == -1) {
-        std::cout<<"set socket setsockopt error !"<<std::endl;
+        //std::cout<<"set socket setsockopt error !"<<std::endl;
         close(listenFd_);
         return false;
     }
 
     ret = bind(listenFd_, (struct sockaddr *)&addr, sizeof(addr));
     if(ret < 0) {
-        std::cout<<"Bind Port"<<port_<<" error!"<<std::endl;
+        //std::cout<<"Bind Port"<<port_<<" error!"<<std::endl;
         close(listenFd_);
         return false;
     }
 
     ret = listen(listenFd_, 6);
     if(ret < 0) {
-        printf("Listen port:%d error!\n", port_);
+        //printf("Listen port:%d error!\n", port_);
         close(listenFd_);
         return false;
     }
     ret = epoller_->addFd(listenFd_,  listenEvent_ | EPOLLIN);
     if(ret == 0) {
-        printf("Add listen error!\n");
+        //printf("Add listen error!\n");
         close(listenFd_);
         return false;
     }
     setFdNonblock(listenFd_);
-    printf("Server port:%d\n", port_);
+    //printf("Server port:%d\n", port_);
     return true;
 }
 

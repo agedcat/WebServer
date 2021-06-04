@@ -6,7 +6,7 @@
 #include "HTTPrequest.h"
 
 const std::unordered_set<std::string> HTTPrequest::DEFAULT_HTML{
-            "/index", "/welcome", "/video", "/picture", };
+            "/index", "/welcome", "/video", "/picture"};
 
 void HTTPrequest::init() {
     method_ = path_ = version_ = body_ = "";
@@ -27,13 +27,16 @@ bool HTTPrequest::parse(Buffer& buff) {
     if(buff.readableBytes() <= 0) {
         return false;
     }
+    //std::cout<<"parse buff start:"<<std::endl;
+    //buff.printContent();
+    //std::cout<<"parse buff finish:"<<std::endl;
     while(buff.readableBytes() && state_ != FINISH) {
         const char* lineEnd = std::search(buff.curReadPtr(), buff.curWritePtrConst(), CRLF, CRLF + 2);
         std::string line(buff.curReadPtr(), lineEnd);
         switch(state_)
         {
         case REQUEST_LINE:
-            std::cout<<"REQUEST: "<<line<<std::endl;
+            //std::cout<<"REQUEST: "<<line<<std::endl;
             if(!parseRequestLine_(line)) {
                 return false;
             }
@@ -69,11 +72,9 @@ void HTTPrequest::parsePath_() {
             }
         }
     }
-    std::cout<<path_<<std::endl;
 }
 
 bool HTTPrequest::parseRequestLine_(const std::string& line) {
-    std::cout<<line<<std::endl;
     std::regex patten("^([^ ]*) ([^ ]*) HTTP/([^ ]*)$");
     std::smatch subMatch;
     if(regex_match(line, subMatch, patten)) {   
@@ -83,7 +84,6 @@ bool HTTPrequest::parseRequestLine_(const std::string& line) {
         state_ = HEADERS;
         return true;
     }
-    std::cout<<"RequestLine Error"<<std::endl;
     return false;
 }
 
