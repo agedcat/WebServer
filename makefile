@@ -1,5 +1,5 @@
 CXX=g++
-CFLAGS=-std=c++14 -O2 -Wall -g
+CFLAGS=-std=c++11 -O2 -Wall -g
 CXXFLAGS=-std=c++14 -O2 -Wall -g
 
 TARGET:=myserver
