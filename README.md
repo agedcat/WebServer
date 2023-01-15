@@ -14,21 +14,21 @@
 
 ## 项目详解
 
-[WebServer项目——buffer详解](https://www.agedcat.com/programming_language/cpp/524.html)
+[WebServer项目——buffer详解](https://www.agedcat.com/post/66ac85ff.html)
 
-[WebServer项目——epoller详解](https://www.agedcat.com/programming_language/cpp/525.html)
+[WebServer项目——epoller详解](https://www.agedcat.com/post/bcf82ea4.html)
 
-[WebServer项目——timer详解](https://www.agedcat.com/programming_language/cpp/535.html)
+[WebServer项目——timer详解](https://www.agedcat.com/post/f410f66e.html)
 
-[WebServer项目——threadpool详解](https://www.agedcat.com/programming_language/cpp/251.html)
+[WebServer项目——threadpool详解](https://www.agedcat.com/post/678e35eb.html)
 
-[WebServer项目——HTTPconnection详解](https://www.agedcat.com/programming_language/cpp/526.html)
+[WebServer项目——HTTPconnection详解](https://www.agedcat.com/post/8b7b6922.html)
 
-[WebServer项目——HTTPrequest详解](https://www.agedcat.com/programming_language/cpp/532.html)
+[WebServer项目——HTTPrequest详解](https://www.agedcat.com/post/8b528cc7.html)
 
-[WebServer项目——HTTPresponse详解](https://github1s.com/Aged-cat/WebServer/blob/master/webserver.h)
+[WebServer项目——HTTPresponse详解](https://www.agedcat.com/post/5b7b173e.html)
 
-[WebServer项目——webserver详解](https://www.agedcat.com/programming_language/cpp/536.html)
+[WebServer项目——webserver详解](https://www.agedcat.com/post/1308746a.html)
 
 ## 环境要求
 
